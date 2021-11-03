@@ -1,18 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react'
+function NameForm(){
 
-// import { response } from 'express';
+  const [name,  setName] = useState("")
 
-function App() {
-  async function handle() {
-    const res = await fetch('http://localhost:3000/');
-    const parsedres = await res.json();
-    console.log(parsedres);
+  const [pass,  setPass] = useState("")
+
+  let handleNameChange = e => {
+    e.persist();
+    setName(e.target.value);
+  };
+
+  let handlePssChange = e => {
+    e.persist();
+    setPass(e.target.value);
+  };
+
+  let handleSubmit = (event) => {
+
+    fetch('http://localhost:3000/login', {
+      method : "POST",
+      mode: 'cors',
+      body : JSON.stringify({name : name, pass : pass}),
+      headers: {'Content-Type' : 'application/json'}
+      
+    })
+    .then(response => response.json())
+    .then(console.log("hi")).
+    catch(er => console.log(er)); 
+    
+    event.preventDefault();
   }
   
   return (
-    <button onClick={handle }>get</button>
-  );
+    <>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input type="text" name="name" value={name || ''} onChange={handleNameChange}/>
+          pass:
+          <input type="text" name="pass" value={pass || ''} onChange={handlePssChange}/>
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    </>
+  )
 }
-
-export default App;
+export default NameForm
