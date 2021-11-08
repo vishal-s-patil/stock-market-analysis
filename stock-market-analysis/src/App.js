@@ -10,14 +10,14 @@ function NameForm(){
   const [suggestion,  setSuggestion] = useState({
     bestMatches:
         [
-        {'2. name' :""},
-        {'2. name' :""},
-        {'2. name' :""},
-        {'2. name' :""},
-        {'2. name' :""},
-        {'2. name' :""},
-        {'2. name' :""},
-        {'2. name' :""}]})
+        {'instrument_name' :""},
+        {'instrument_name' :""},
+        {'instrument_name' :""},
+        {'instrument_name' :""},
+        {'instrument_name' :""},
+        {'instrument_name' :""},
+        {'instrument_name' :""},
+        {'instrument_name' :""}]})
 
   let handleNameChange = e => {
     e.persist();
@@ -29,18 +29,17 @@ function NameForm(){
     setPass(e.target.value);
   };
 
-  let handleSearchBoxChange = e => {
+  let handleSearchBoxChange = async (e) => {
     e.persist();
-
-    fetch(`http://localhost:3000/suggestion?keyword=${e.target.value}`)
-        .then(res => res.json())
-        .then(data => {
-          setSuggestion(data)
-        });
-        
-        setSearchBox(e.target.value);
-        
-      };
+    
+    fetch(`http://localhost:3000/getCompanyName?keyword=${e.target.value}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      setSuggestion(data)
+    })
+    setSearchBox(e.target.value);
+  }
 
   let handleSubmit = (event) => {
 
@@ -53,24 +52,35 @@ function NameForm(){
     })
     .then(response => response.json())
     .catch(er => console.log(er)); 
+
+    fetch(`http://localhost:3000/getScrapedData?cName=${searchBox}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+    })
     
     event.preventDefault();
   }
   
   let handleSuggestionClick = (e) => {
-    console.log(e.target.textContent);
-    console.log(suggestion);
-    for (let i = 0; i < suggestion.bestMatches.length; i++) {
-      if (e.target.textContent.split(",")[0].trim() === suggestion.bestMatches[i]['2. name']){
-        // console.log(suggestion.bestMatches[i]['1. symbol'], suggestion.bestMatches[i]['2. name']);
-        let symbol = suggestion.bestMatches[i]['1. symbol'];
-        // console.log(symbol);
-        fetch(`http://localhost:3000/getCompanyDetails?cSymbol=${symbol}`)
-        .then(res => res.json())
-        .then(data => console.log(data));
-        break;
+    // let CNAME = e.target.textContent.split(",")[0].trim() || "";
+    let CSYMBOL = e.target.textContent.split(",")[1].trim() || "";
+    // let CExchange = e.target.textContent.split(",")[2].trim() || "";
+    console.log(CSYMBOL);
+    fetch(`http://localhost:3000/getCompanyDetails/?cSymbol=${CSYMBOL}`)
+    .then(res => res.json())
+    .then(data => {
+      if (Object.keys(data).length === 0){
+        fetch(`http://localhost:3000/getScrapedData?cName=${CSYMBOL}`)
+        .then(response => response.json())
+        .then(scraped_data => {
+          console.log(scraped_data);
+        })
       }
-    }
+      else {
+        console.log(data);
+      }
+    })
     e.preventDefault();
   }
   
@@ -83,22 +93,24 @@ function NameForm(){
           pass:
           <input type="text" name="pass" value={pass || ''} onChange={handlePssChange}/>
           search:
-          <input type="text" name="searchBox" value={searchBox || ''} onChange={handleSearchBoxChange}/>
+          <input type="text" name="search" value={searchBox || ''} onChange={handleSearchBoxChange}/>
+          <input type="submit" value="search" />
+          
+         
         </label>
-        <input type="submit" value="Submit" />
         <h1>hi</h1>
         <ul>
-          <li onClick={handleSuggestionClick}>{suggestion && suggestion.bestMatches[0]['2. name']} , {suggestion.bestMatches[0]['1. symbol']}</li>
-          <li onClick={handleSuggestionClick}>{suggestion && suggestion.bestMatches[1]['2. name']} , {suggestion.bestMatches[1]['1. symbol']}</li>
-          <li onClick={handleSuggestionClick}>{suggestion && suggestion.bestMatches[2]['2. name']} , {suggestion.bestMatches[2]['1. symbol']}</li>
-          <li onClick={handleSuggestionClick}>{suggestion && suggestion.bestMatches[3]['2. name']} , {suggestion.bestMatches[3]['1. symbol']}</li>
-          <li onClick={handleSuggestionClick}>{suggestion && suggestion.bestMatches[4]['2. name']} , {suggestion.bestMatches[4]['1. symbol']}</li>
-          <li onClick={handleSuggestionClick}>{suggestion && suggestion.bestMatches[5]['2. name']} , {suggestion.bestMatches[5]['1. symbol']}</li>
-          <li onClick={handleSuggestionClick}>{suggestion && suggestion.bestMatches[6]['2. name']} , {suggestion.bestMatches[6]['1. symbol']}</li>
-          <li onClick={handleSuggestionClick}>{suggestion && suggestion.bestMatches[7]['2. name']} , {suggestion.bestMatches[7]['1. symbol']}</li>
+          <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[0] && suggestion.data[0]['instrument_name']},{suggestion.data && suggestion.data[0] && suggestion.data[0]['symbol']},{suggestion.data && suggestion.data[0] && suggestion.data[0]['exchange']}</li>
+          <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[1] && suggestion.data[1]['instrument_name']},{suggestion.data && suggestion.data[1] && suggestion.data[1]['symbol']},{suggestion.data && suggestion.data[1] && suggestion.data[1]['exchange']}</li>
+          <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[2] && suggestion.data[2]['instrument_name']},{suggestion.data && suggestion.data[2] && suggestion.data[2]['symbol']},{suggestion.data && suggestion.data[2] && suggestion.data[2]['exchange']}</li>
+          <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[3] && suggestion.data[3]['instrument_name']},{suggestion.data && suggestion.data[3] && suggestion.data[3]['symbol']},{suggestion.data && suggestion.data[3] && suggestion.data[3]['exchange']}</li>
+          <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[4] && suggestion.data[4]['instrument_name']},{suggestion.data && suggestion.data[4] && suggestion.data[4]['symbol']},{suggestion.data && suggestion.data[4] && suggestion.data[4]['exchange']}</li>
+          <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[5] && suggestion.data[5]['instrument_name']},{suggestion.data && suggestion.data[5] && suggestion.data[5]['symbol']},{suggestion.data && suggestion.data[5] && suggestion.data[5]['exchange']}</li>
+          <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[6] && suggestion.data[6]['instrument_name']},{suggestion.data && suggestion.data[6] && suggestion.data[6]['symbol']},{suggestion.data && suggestion.data[6] && suggestion.data[6]['exchange']}</li>
+          <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[7] && suggestion.data[7]['instrument_name']},{suggestion.data && suggestion.data[7] && suggestion.data[7]['symbol']},{suggestion.data && suggestion.data[7] && suggestion.data[7]['exchange']}</li>
         </ul>
       </form>
     </>
   )
 }
-export default NameForm
+export default NameForm 

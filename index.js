@@ -2,10 +2,14 @@
 var request = require('request');
 const express = require('express')
 const cors = require('cors');
+const rp = require('request-promise');
+const cheerio = require('cheerio');
 var bodyParser = require('body-parser');
 const { MongoClient } = require("mongodb");
+var axios = require("axios").default;
 const util = require("util");
 const app = express()
+var axios = require("axios").default;
 const port = 3000
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -14,7 +18,7 @@ app.use(bodyParser.json())
 app.use(cors());
 
 app.post('/login', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   connect(req.body);
 })
 
@@ -44,11 +48,92 @@ app.get('/suggestion', (req, response) => {
 var request = require('request');
 const { response } = require('express');
 
+app.get('/getCompanyName', (req, res) => {
+
+  var options = {
+    method: 'GET',
+    url: 'https://twelve-data1.p.rapidapi.com/symbol_search',
+    params: {symbol: `${req.query.keyword}`, outputsize: '7'},
+    headers: {
+      'x-rapidapi-host': 'twelve-data1.p.rapidapi.com',
+      'x-rapidapi-key': 'b697060cf2msh9dbece726f614b4p19ab64jsn16551bb4d43f'
+    }
+  };
+
+  axios.request(options).then(function (response) {
+    console.log(response.data);
+    res.send(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
+})
+
+app.get('/getScrapedData', (req, response) => {
+  console.log(req.query.cName);
+
+  let scrapingUrl = `https://www.screener.in/company/${req.query.cName}/`;
+  
+  (async() => {
+    try
+    {
+        let res = await rp({
+            uri : scrapingUrl,
+            headers : {
+                'content-encoding': 'gzip',
+                'vary': 'Accept-Encoding',
+                'vary': 'Cookie',
+                'x-content-type-options': 'nosniff',
+                'x-content-type-options': 'nosniff',
+                'x-frame-options': 'DENY',
+                'x-frame-options': 'SAMEORIGIN'
+            },
+            gzip : true
+        })
+        .on('response', function(response) {
+                global.sattusCode = response.statusCode;
+            });
+        if (global.sattusCode === 200){
+            let $ = cheerio.load(res);
+            let MarketCapSelector = '#top-ratios > li:nth-child(1) > span.nowrap.value > span';
+            let CurrentPriceSelector = '#top-ratios > li:nth-child(2) > span.nowrap.value > span';
+            let HighSelector = '#top-ratios > li:nth-child(3) > span.nowrap.value > span:nth-child(1)';
+            let LowSelector = '#top-ratios > li:nth-child(3) > span.nowrap.value > span:nth-child(2)';
+            let BookValueSelector = '#top-ratios > li:nth-child(5) > span.nowrap.value > span';
+            
+            let MarketCap = $(MarketCapSelector)
+            let CurrentPrice = $(CurrentPriceSelector)
+            let High = $(HighSelector)
+            let Low = $(LowSelector)
+            let BookValue = $(BookValueSelector)
+            let data = ({
+                "MarketCap" : MarketCap.text(),
+                "CurrentPrice" : CurrentPrice.text(),
+                "High" : High.text(),
+                "Low" : Low.text(),
+                "BookValue" : BookValue.text()
+            })
+            // console.log(data);
+            response.send(data)
+            console.log("hello");
+        }
+    }
+    catch (er)
+    {
+        response.send(
+          {
+            "error" : "data not found"
+          }
+        )
+    }
+})();
+
+})
+
 app.get('/getCompanyDetails', (req, response) => {
-  console.log(req.query.cSymbol);
+  // console.log(req.query.cSymbol);
   var companyDetailsurl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${req.query.cSymbol}&apikey=MURG2M4JADY0CNBX`;
 
-  console.log(companyDetailsurl);
+  // console.log(companyDetailsurl);
 
   request.get({
     url: companyDetailsurl,
