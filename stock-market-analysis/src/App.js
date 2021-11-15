@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import Navbar from './Navbar/Navbar'
 function NameForm(){
  
   const [name,  setName] = useState("")
@@ -86,6 +87,7 @@ function NameForm(){
   
   return (
     <>
+      <Navbar/>
       <form onSubmit={handleSubmit}>
         <label>
           Name:
