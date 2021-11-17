@@ -1,0 +1,19 @@
+.contactContainer > form{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    align-items: center;
+    /* justify-content: center; */
+    text-align: center;
+    border: 2px solid red;
+}
+
+.contactContainer > form > div{
+    color: rosybrown;
+    padding: 10px;
+}
+
+/* #phnodiv{
+    margin-left: 100px;
+} */
