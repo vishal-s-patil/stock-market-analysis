@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import './NewsItem.css'
 
 export default class NewsItem extends Component {
-    constructor(){
-        super();
-    }
+    // constructor(){
+    //     super();
+    // }
     render() {
         let {title, disc, imgUrl, url} = this.props;
         return (
@@ -14,7 +14,7 @@ export default class NewsItem extends Component {
                     <div>
                         <h5>{title}</h5> 
                         <p>{disc}</p>
-                        <a href={url} target="_blank">Read more</a>
+                        <a href={url}>Read more</a>
                     </div>
                 </div>
             </div>

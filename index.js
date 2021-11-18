@@ -18,8 +18,11 @@ app.use(bodyParser.json())
 app.use(cors());
 
 app.post('/login', (req, res) => {
-  // console.log(req.body);
-  connect(req.body);
+  connectLogin(req.body);
+})
+
+app.post('/contactSubmit', (req, res) => {
+  connectContact(req.body);
 })
 
 app.get('/suggestion', (req, response) => {
@@ -172,14 +175,36 @@ const uri = "mongodb://127.0.0.1:27017/";
 
 const client = new MongoClient(uri);
 
-async function connect(obj){
+async function connectLogin(obj){
   try{
     await client.connect();
     const db = client.db("stock_market_analysis");
     var collections = await db.collections();
-    var login_info = collections[0];
+    var login_info = collections[collections.indexOf("login_info")];
     await login_info.insertOne(obj)
 
+  }
+  catch(ex){ 
+    console.log("an error occured " + ex);
+  }
+  finally{
+    client.close();
+  }
+}
+
+async function connectContact(obj){
+  try{
+    await client.connect();
+    const db = client.db("stock_market_analysis");
+    var collections = await db.collections();
+    var collectionNames = [];
+    collections[0].collectionName
+    for (let i = 0; i < collections.length; i++) {
+      collectionNames.push(collections[i].collectionName)
+    }
+    var contact_info = collections[collectionNames.indexOf("contact_submit")];
+    await contact_info.insertOne(obj)
+    console.log(obj);
   }
   catch(ex){ 
     console.log("an error occured " + ex);

@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.bgImg > img{
+  position: absolute;
+  opacity: 0.3;
+  height: 600px;
+  width: 100%;
+  padding : 65px;
+  padding-top: 0px;
+  z-index: -1;
+}

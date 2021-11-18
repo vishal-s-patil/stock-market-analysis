@@ -1,8 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Navbar from './Navbar/Navbar'
-import News from './News/News';
+// import News from './News/News';
 import Home from './Home/Home';
 import Contact from './Contact/Contact';
+import './App.css'
+import background from "./Images/bgImage.png";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,10 +12,12 @@ import {
 } from "react-router-dom";
 
 function NameForm(){
-
   return (
     <>
     <Router>
+    <div className="bgImg">
+      <img src={background} alt="" />
+    </div>
     <Navbar/>
       <Routes>
 
