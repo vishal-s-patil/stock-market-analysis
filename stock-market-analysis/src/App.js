@@ -1,42 +1,73 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from './Navbar/Navbar'
 // import News from './News/News';
 import Home from './Home/Home';
 import Contact from './Contact/Contact';
+import Details from './Details/Details';
 import './App.css'
 import background from "./Images/bgImage.png";
 import {
   BrowserRouter as Router,
-  Routes,
   Route,
 } from "react-router-dom";
+import {Switch} from "react-router";
 
 function NameForm(){
+
+  const [makeEmpty, setMakeEmpty] = useState(false)
+
   return (
+
     <>
     <Router>
     <div className="bgImg">
       <img src={background} alt="" />
     </div>
     <Navbar/>
-      <Routes>
+      <Switch>
+    
+          <Route exact path="/">
+              <Home  setMakeEmpty={setMakeEmpty}/>
+          </Route>
 
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/News">
+            {/* <News/> */}
+          </Route>
 
-          {/* <Route exact path="/News" element={<News />} /> */}
+          <Route exact path="/About">
+            <About/>
+          </Route>
 
-          <Route exact path="/About" element={<About />} />
+          <Route exact path="/Contact" >
+            <Contact/>
+          </Route>
 
-          <Route exact path="/Contact" element={<Contact />} />
+          <Route exact path="/Details" >
+            <Details/>
+          </Route>
 
-      </Routes>
+      </Switch>
     </Router>
     </>
   )
 }
 
 function About() {
-  return <h2>About</h2>;
+  return(
+    <>
+      <h1>skdjvsldnb</h1>
+    </>
+  );
 }
+
+function Empty() {
+  return(
+    <>
+      
+    </>
+  );
+}
+
+
 
 export default NameForm 

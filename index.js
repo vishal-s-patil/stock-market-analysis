@@ -64,7 +64,7 @@ app.get('/getCompanyName', (req, res) => {
   };
 
   axios.request(options).then(function (response) {
-    console.log(response.data);
+    // console.log(response.data);
     res.send(response.data);
   }).catch(function (error) {
     console.error(error);
@@ -101,23 +101,37 @@ app.get('/getScrapedData', (req, response) => {
             let CurrentPriceSelector = '#top-ratios > li:nth-child(2) > span.nowrap.value > span';
             let HighSelector = '#top-ratios > li:nth-child(3) > span.nowrap.value > span:nth-child(1)';
             let LowSelector = '#top-ratios > li:nth-child(3) > span.nowrap.value > span:nth-child(2)';
+            let Stock_PESelector = '#top-ratios > li:nth-child(4) > span.nowrap.value > span';
             let BookValueSelector = '#top-ratios > li:nth-child(5) > span.nowrap.value > span';
+            let DividendYieldSelector = '#top-ratios > li:nth-child(6) > span.nowrap.value > span';
+            let ROCESelector = '#top-ratios > li:nth-child(7) > span.nowrap.value > span';
+            let ROESelector = '#top-ratios > li:nth-child(8) > span.nowrap.value > span';
+            let FaceValueSelector = '#top-ratios > li:nth-child(9) > span.nowrap.value > span';
             
             let MarketCap = $(MarketCapSelector)
             let CurrentPrice = $(CurrentPriceSelector)
             let High = $(HighSelector)
             let Low = $(LowSelector)
+            let Stock_PE = $(Stock_PESelector)
             let BookValue = $(BookValueSelector)
+            let DividendYield = $(DividendYieldSelector)
+            let ROC = $(ROCESelector)
+            let ROE = $(ROESelector)
+            let FaceValue = $(FaceValueSelector)
+
             let data = ({
                 "MarketCap" : MarketCap.text(),
                 "CurrentPrice" : CurrentPrice.text(),
                 "High" : High.text(),
                 "Low" : Low.text(),
-                "BookValue" : BookValue.text()
+                "BookValue" : BookValue.text(),
+                "Stock_PE" : Stock_PE.text(),
+                "DividendYield" : DividendYield.text(),
+                "ROC" : ROC.text(),
+                "ROE" : ROE.text(),
+                "FaceValue" : FaceValue.text()
             })
-            // console.log(data);
             response.send(data)
-            console.log("hello");
         }
     }
     catch (er)
@@ -130,45 +144,6 @@ app.get('/getScrapedData', (req, response) => {
     }
 })();
 
-})
-
-app.get('/getCompanyDetails', (req, response) => {
-  // console.log(req.query.cSymbol);
-  var companyDetailsurl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${req.query.cSymbol}&apikey=MURG2M4JADY0CNBX`;
-
-  // console.log(companyDetailsurl);
-
-  request.get({
-    url: companyDetailsurl,
-    json: true,
-    headers: {'User-Agent': 'request'}
-  }, (err, res, data) => {
-    if (err) {
-      console.log('Error:', err);
-    } else if (res.statusCode !== 200) {
-      console.log('Status:', res.statusCode);
-    } else {
-      // console.log(data);
-      let CompanyOverview = { 
-                    "Symbol" : data.Symbol,
-                    "company name" : data.Name,
-                    "Country" : data.Country,
-                    "Sector" : data.Sector,
-                    "MarketCapitalization" : data.MarketCapitalization,
-                    "DividendPerShare" : data.DividendPerShare,
-                    "DividendYield" : data.DividendYield,
-                    "52WeekHigh" : data['52WeekHigh'],
-                    "52WeekLow" : data['52WeekLow'],
-                    "50DayMovingAverage" : data["50DayMovingAverage"],
-                    "200DayMovingAverage" : data["200DayMovingAverage"],
-                    "PERatio": data.PERatio,
-                    "PEGRatio": data.PEGRatio,
-                    "BookValue": data.BookValue
-                  }
-      response.send(CompanyOverview)
-      // console.log(CompanyOverview);   
-    }
-});
 })
 
 const uri = "mongodb://127.0.0.1:27017/";
