@@ -13,31 +13,49 @@ export default function Details(props) {
                 <span>BANKNAME</span>
                 <ul>
                     <li>
-                        name : data
+                        <span>BookValue </span>
+                        <span className="mySpan" style={{marginLeft: "30px"}}>{ location.state.BookValue}</span>
+                        
                     </li>
                     <li>
-                        name : data
+                        <span>CurrentPrice </span>
+                        <span className="mySpan" style={{marginLeft: "30px"}}>{location.state.CurrentPrice}</span>
+                         
                     </li>
                     <li>
-                        name : data
+                        <span>DividendYield </span>
+                        <span className="mySpan" style={{marginLeft: "30px"}}>{location.state.DividendYield}</span>
+                     
                     </li>
                     <li>
-                        name : data
+                        <span>FaceValue  </span>
+                        <span className="mySpan" style={{marginLeft: "36px"}}>{location.state.FaceValue}</span>
+                    
                     </li>
                     <li>
-                        name : data
+                        <span>High </span>
+                        <span className="mySpan" style={{marginLeft: "86px"}}>{location.state.High}</span>
+                     
                     </li>
                     <li>
-                        name : data
+                        <span>Low </span>
+                        <span className="mySpan" style={{marginLeft: "98px"}}>{location.state.Low}</span>
+                     
                     </li>
                     <li>
-                        name : data
+                        <span>MarketCap </span>
+                        <span className="mySpan" style={{marginLeft: "26px"}}>{location.state.MarketCap}</span>
+                     
                     </li>
                     <li>
-                        name : data
+                        <span>ROC </span>
+                        <span className="mySpan" style={{marginLeft: "86px"}}>{location.state.ROC}</span>
+                    
                     </li>
                     <li>
-                        name : data
+                        <span>  ROE </span>
+                        <span className="mySpan" style={{marginLeft: "100px"}}>{location.state.ROE}</span>
+                    
                     </li>
                 </ul>
                 <Link to="/" id="linkId">Clear</Link>

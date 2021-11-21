@@ -46,7 +46,6 @@ app.get('/suggestion', (req, response) => {
 });
 })
 
-
 'use strict';
 var request = require('request');
 const { response } = require('express');
@@ -72,7 +71,7 @@ app.get('/getCompanyName', (req, res) => {
 })
 
 app.get('/getScrapedData', (req, response) => {
-  console.log(req.query.cName);
+  // console.log(req.query.cName);
 
   let scrapingUrl = `https://www.screener.in/company/${req.query.cName}/`;
   

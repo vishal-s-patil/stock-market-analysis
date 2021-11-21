@@ -47,3 +47,10 @@
     background-color: ghostwhite;
     padding: 3px;
 }
+
+.mySpan {
+    border : 2px solid sienna;
+    border-radius: 3px;
+    background-color: sienna;
+    margin-left: 10px;
+}
