@@ -1,5 +1,7 @@
 'use strict';
 var request = require('request');
+const finnhub = require('finnhub');
+const {StringStream} = require("scramjet");
 const express = require('express')
 const cors = require('cors');
 const rp = require('request-promise');
@@ -25,8 +27,25 @@ app.post('/contactSubmit', (req, res) => {
   connectContact(req.body);
 })
 
+app.get("/ipoCalander", (req, res) => {
+  const api_key = finnhub.ApiClient.instance.authentications['api_key'];
+  api_key.apiKey = "c6dst2aad3idg95uk8qg"
+  const finnhubClient = new finnhub.DefaultApi()
+  
+  finnhubClient.ipoCalendar("2020-01-01", "2020-12-15", (error, data, response) => {
+    console.log(data)
+    res.send(data)
+  });
+})
+
+
+// request.get("https://www.alphavantage.co/query?function=IPO_CALENDAR&apikey=demo")
+//     .pipe(new StringStream())
+//     .CSVParse()                                  
+//     .consume(object => console.log("Row:", object))
+//     .then(() => console.log("success"));
+
 app.get('/suggestion', (req, response) => {
-  // console.log(req.query.keyword);
 
   var keywordurl = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${req.query.keyword}&apikey=MURG2M4JADY0CNBX`;
 
@@ -47,7 +66,6 @@ app.get('/suggestion', (req, response) => {
 })
 
 'use strict';
-var request = require('request');
 const { response } = require('express');
 
 app.get('/getCompanyName', (req, res) => {
@@ -154,9 +172,13 @@ async function connectLogin(obj){
     await client.connect();
     const db = client.db("stock_market_analysis");
     var collections = await db.collections();
-    var login_info = collections[collections.indexOf("login_info")];
+    var collectionNames = [];
+    for (let i = 0; i < collections.length; i++) {
+      collectionNames.push(collections[i].collectionName)
+    }
+    var login_info = collections[collectionNames.indexOf("login_info")];
     await login_info.insertOne(obj)
-
+    console.log(obj);
   }
   catch(ex){ 
     console.log("an error occured " + ex);
@@ -172,7 +194,6 @@ async function connectContact(obj){
     const db = client.db("stock_market_analysis");
     var collections = await db.collections();
     var collectionNames = [];
-    collections[0].collectionName
     for (let i = 0; i < collections.length; i++) {
       collectionNames.push(collections[i].collectionName)
     }

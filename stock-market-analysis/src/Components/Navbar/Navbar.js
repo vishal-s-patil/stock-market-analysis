@@ -12,7 +12,7 @@ export default function Navbar()
                     <Link className="myLink" to="/News">News</Link>
                     <Link className="myLink" to="/About">About</Link>
                     <Link className="myLink" id="myContact" to="/Contact">Contact us</Link>
-                    <button className="loginBtn">Login</button>
+                    <Link className="loginBtn" to="/Login">Login</Link>
                 </ul>
             </nav>
         </>

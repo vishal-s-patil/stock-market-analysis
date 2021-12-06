@@ -74,10 +74,8 @@ export default function Contact() {
                         <input type="email" name="email" id="email" onChange={handleEmailChange}/>
                     </div>
                     <div>
-                        <label htmlFor="name" style = {{ whiteSpace: "pre" }}>Dummy : {`${'            '}`}</label>
-                        <input type="text" name="name" id="name" onChange={handleDummyChange}/>
+                        <label htmlFor="message">write your comment here : </label>
                     </div>
-                    <label htmlFor="message">write ur quary here : </label>
                     <div>
                         <textarea rows="10" cols="60" name="message" id="message" onChange={handleQuaryChange}>
                         </textarea>

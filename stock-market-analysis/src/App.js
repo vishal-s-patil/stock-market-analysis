@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
-import Navbar from './Navbar/Navbar'
+import React, {useState} from 'react'
+import Navbar from './Components/Navbar/Navbar'
 // import News from './News/News';
-import Home from './Home/Home';
-import Contact from './Contact/Contact';
-import Details from './Details/Details';
+import Login from './Components/Login/Login';
+// import Dummy from './Components/dummy/Dummy';
+import Home from './Components/Home/Home';
+import Contact from './Components/Contact/Contact';
+import Details from './Components/Details/Details';
+import About from './Components/About/About';
 import './App.css'
-import background from "./Images/bgImage.png";
 import {
   BrowserRouter as Router,
   Route,
@@ -20,9 +22,9 @@ function NameForm(){
 
     <>
     <Router>
-    <div className="bgImg">
+    {/* <div className="bgImg">
       <img src={background} alt="" />
-    </div>
+    </div> */}
     <Navbar/>
       <Switch>
     
@@ -46,28 +48,15 @@ function NameForm(){
             <Details/>
           </Route>
 
+          <Route exact path="/Login" >
+            <Login/>
+          </Route>
+
       </Switch>
     </Router>
     </>
   )
 }
-
-function About() {
-  return(
-    <>
-      <h1>skdjvsldnb</h1>
-    </>
-  );
-}
-
-function Empty() {
-  return(
-    <>
-      
-    </>
-  );
-}
-
 
 
 export default NameForm 

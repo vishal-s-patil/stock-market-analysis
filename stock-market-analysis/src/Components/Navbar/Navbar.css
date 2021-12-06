@@ -41,6 +41,7 @@
 
 .loginBtn{
     color: white;
+    text-decoration: none;
     border: none;
     border-radius: 3px;
     background-color: rgb(165, 0, 0);

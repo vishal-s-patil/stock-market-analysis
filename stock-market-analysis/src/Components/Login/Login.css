@@ -1,0 +1,21 @@
+.Logincontainer{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    margin-top: 100px;
+    height: 100px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border: 2px solid rebeccapurple;
+}
+
+.Logincontainer > form {
+    display: flex;
+    flex-direction: column;
+}
+
+.Logincontainer > form > div {
+    margin: 5px;
+}
