@@ -4,7 +4,7 @@ import './About.css'
 export default function About() {
     const comment = useRef(null)
 
-    let handleClick = () => {
+    let handleClick = (e) => {
         window.scrollTo({
             top : comment.current.offsetTop,
             behavior : "smooth"

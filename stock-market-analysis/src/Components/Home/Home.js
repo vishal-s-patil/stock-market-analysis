@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useHistory} from "react-router-dom"; 
-import { listeners } from 'superagent';
+import './Home.css'
 
 export default function Home(props) {
 
@@ -44,15 +44,6 @@ export default function Home(props) {
   }
 
   let handleSubmit = (event) => {
-      // fetch('http://localhost:3000/login', {
-      //   method : "POST",
-      //   mode: 'cors',
-      //   body : JSON.stringify({name : name, pass : pass}),
-      //   headers: {'Content-Type' : 'application/json'}
-        
-      // })
-      // .then(response => response.json())
-      // .catch(er => console.log(er)); 
 
         fetch(`http://localhost:3000/getScrapedData?cName=${searchBox}`)
         .then(res => res.json())
@@ -77,6 +68,9 @@ export default function Home(props) {
     // let CNAME = e.target.textContent.split(",")[0].trim() || "";
     let CSYMBOL = e.target.textContent.split(",")[1].trim() || "";
     // let CExchange = e.target.textContent.split(",")[2].trim() || "";
+    let inputBox = document.getElementById("search");
+    inputBox.value = CSYMBOL;
+    setSearchBox(CSYMBOL)
     console.log(CSYMBOL);
     fetch(`http://localhost:3000/getScrapedData?cName=${CSYMBOL}`)
     .then(res => res.json())
@@ -88,14 +82,13 @@ export default function Home(props) {
 
     return (
         <>
-          <form onSubmit={handleSubmit}>
-              <label>
-                search:
-                <input type="text" name="search" value={searchBox || ''} onChange={handleSearchBoxChange}/>
+        <div className="homeContainer">
+        <form onSubmit={handleSubmit}>
+                <label htmlFor="search" style={{display : "block"}}> search stock here</label>
+                <input type="text" name="search" id="search" value={searchBox || ''} onChange={handleSearchBoxChange}/>
                 
-                <button type="submit" onClick={handleSubmit}>button</button>
+                <button type="submit" onClick={handleSubmit}>Search</button>
                 {/* {showDetails ? <Details data={data}/> : null} */}
-              </label>
               <ul>
                 <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[0] && suggestion.data[0]['instrument_name']} {showSuggestion[0] ? "," : ""} {suggestion && suggestion.data && suggestion.data[0] && suggestion.data[0]['symbol']} {showSuggestion[0] ? "," : ""} {suggestion && suggestion.data && suggestion.data[0] && suggestion.data[0]['exchange']}</li>
                 <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[1] && suggestion.data[1]['instrument_name']} {showSuggestion[1] ? "," : ""} {suggestion && suggestion.data && suggestion.data[1] && suggestion.data[1]['symbol']} {showSuggestion[1] ? "," : ""} {suggestion && suggestion.data && suggestion.data[1] && suggestion.data[1]['exchange']}</li>
@@ -107,6 +100,8 @@ export default function Home(props) {
                 <li className="myList" onClick={handleSuggestionClick}>{suggestion && suggestion.data && suggestion.data[7] && suggestion.data[7]['instrument_name']} {showSuggestion[8] ? "," : ""} {suggestion && suggestion.data && suggestion.data[7] && suggestion.data[7]['symbol']} {showSuggestion[7] ? "," : ""} {suggestion && suggestion.data && suggestion.data[7] && suggestion.data[7]['exchange']}</li>
               </ul>
           </form>
+        </div>
+          
         </>
     )
 }
