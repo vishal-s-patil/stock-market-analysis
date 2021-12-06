@@ -3,6 +3,7 @@ var request = require('request');
 const finnhub = require('finnhub');
 const {StringStream} = require("scramjet");
 const express = require('express')
+var nodemailer = require('nodemailer');
 const cors = require('cors');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
@@ -19,9 +20,39 @@ app.use(bodyParser.json())
 
 app.use(cors());
 
-app.post('/login', (req, res) => {
-  connectLogin(req.body);
+app.post('/subscribe', (req, res) => {
+  SendMail(req.body.email);
 })
+
+function SendMail(myGmail)
+{
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    auth: {
+      user: 'vspatil8123@gmail.com',
+      pass: 'xqqhxthncggkurbn'
+    }
+  });
+
+  var mailOptions = {
+    from: 'vspatil8123@gmail.com',
+    to: myGmail,
+    subject: 'Thank you for subscribing',
+    text: `When it comes to investing and stock trading, news and reaction time can make or break an investor. This is the best site for up-to-date financial news.`
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
 
 app.post('/contactSubmit', (req, res) => {
   connectContact(req.body);

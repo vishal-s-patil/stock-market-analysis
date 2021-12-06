@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
 import Navbar from './Components/Navbar/Navbar'
 // import News from './News/News';
-import Login from './Components/Login/Login';
-// import Dummy from './Components/dummy/Dummy';
+import Subscribe from './Components/Subscribe/Subscribe';
 import Home from './Components/Home/Home';
 import Contact from './Components/Contact/Contact';
 import Details from './Components/Details/Details';
@@ -48,8 +47,8 @@ function NameForm(){
             <Details/>
           </Route>
 
-          <Route exact path="/Login" >
-            <Login/>
+          <Route exact path="/Subscribe" >
+            <Subscribe/>
           </Route>
 
       </Switch>
