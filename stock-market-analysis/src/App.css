@@ -38,10 +38,12 @@
 }
 
 .bgImg > img{
-  position: absolute;
+  position: static;
   opacity: 0.3;
-  height: 600px;
+  /* height: 600px; */
   width: 100%;
+  top: 0%;
+  left: 0%;
   padding : 65px;
   padding-top: 0px;
   z-index: -1;

@@ -55,6 +55,17 @@ export default function Contact() {
           })
           .then(response => response.json())
           .catch(er => console.log(er)); 
+          alert("Your response have been submited")
+          let nameINPUT  = document.getElementById("name")
+          let ph_noINPUT = document.getElementById("phno")
+          let emailINPUT = document.getElementById("email")
+          let commentINPUT = document.getElementById("message")
+
+          nameINPUT.value = ""
+          ph_noINPUT.value = ""
+          emailINPUT.value = ""
+          commentINPUT.value = ""
+
         event.preventDefault();   
     }
     return (

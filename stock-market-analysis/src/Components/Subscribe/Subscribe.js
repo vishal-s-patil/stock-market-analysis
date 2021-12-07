@@ -19,6 +19,9 @@ export default function Login() {
       })
       .then(response => response.json())
       .catch(er => console.log(er));
+      alert("Thanks for subscribe")
+      let emailInput = document.getElementById("email");
+      emailInput.value = ""
         event.preventDefault()
     }
     return (

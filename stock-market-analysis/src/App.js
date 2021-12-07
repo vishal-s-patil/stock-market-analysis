@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 import Navbar from './Components/Navbar/Navbar'
-// import News from './News/News';
+import News from './Components/News/News'
 import Subscribe from './Components/Subscribe/Subscribe';
 import Home from './Components/Home/Home';
 import Contact from './Components/Contact/Contact';
 import Details from './Components/Details/Details';
 import About from './Components/About/About';
+// import background from './Images/bgImg.png';
 import './App.css'
 import {
   BrowserRouter as Router,
@@ -32,7 +33,7 @@ function NameForm(){
           </Route>
 
           <Route exact path="/News">
-            {/* <News/> */}
+            <News/>
           </Route>
 
           <Route exact path="/About">

@@ -41,8 +41,11 @@ function SendMail(myGmail)
   var mailOptions = {
     from: 'vspatil8123@gmail.com',
     to: myGmail,
-    subject: 'Thank you for subscribing',
-    text: `When it comes to investing and stock trading, news and reaction time can make or break an investor. This is the best site for up-to-date financial news.`
+    subject: 'WELCOME TO STOCK WORLD',
+    text: `YOU ARE SUCCESSFULLY SUSCRIBED TO STOCK MARKET.
+    "When it comes to investing and stock trading, news and reaction time can make or break an investor. This is the best site for up-to-date financial news."
+    THANK YOU FOR SUBSCRIBING.
+    `
   };
 
   transporter.sendMail(mailOptions, function(error, info){
