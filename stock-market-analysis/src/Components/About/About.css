@@ -4,7 +4,6 @@
     width: 80%;
     height: 100vh;
     margin: auto;
-    border: 2px solid red;
 }
 
 .aboutContainer > h1 {
@@ -28,7 +27,10 @@
 }
 
 .skipTo {
-    border: 2px solid red;
     width: 233px;
     padding: 10px;
+}
+
+.skipTo > h4 {
+    margin-top: 15px;
 }

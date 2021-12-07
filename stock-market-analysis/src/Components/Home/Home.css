@@ -14,7 +14,6 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 2px solid red;
     width: 80%;
     margin: auto;
     margin-top: 100px;
@@ -44,4 +43,6 @@
     font-size: 17px;
     border: 2px solid black;
     border-radius: 10px;
+    margin-top: 21px;
+    padding: 3px;
 }

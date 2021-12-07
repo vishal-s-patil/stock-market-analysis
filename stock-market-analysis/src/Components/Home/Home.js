@@ -85,7 +85,7 @@ export default function Home(props) {
         <div className="homeContainer">
         <form onSubmit={handleSubmit}>
                 <label htmlFor="search" style={{display : "block"}}> search stock here</label>
-                <input type="text" name="search" id="search" value={searchBox || ''} onChange={handleSearchBoxChange}/>
+                <input type="text" name="search" id="search" placeholder="Enter stock name" value={searchBox || ''} onChange={handleSearchBoxChange}/>
                 
                 <button type="submit" onClick={handleSubmit}>Search</button>
                 {/* {showDetails ? <Details data={data}/> : null} */}
